@@ -22,7 +22,6 @@ class BaiduApplets implements BaseApplets {
     {
         $this->configs=$configs;
 
-        
         $CacheDriver = 'Files';
         $CacheConfigs = [];
         if(isset($configs['redis'])){

@@ -3,10 +3,12 @@
 namespace EasyApplets;
 
 use Phpfastcache\CacheManager;
-use Phpfastcache\Config\ConfigurationOption;
 use Phpfastcache\Drivers\Files\Config;
 use Phpfastcache\Drivers\Predis\Config as PredisConfig;
 use Phpfastcache\Helper\Psr16Adapter;
+
+//cachemanager 缓存管理设置默认配置
+CacheManager::setDefaultConfig(new Config());
 
 class Cache{
 
@@ -17,19 +19,18 @@ class Cache{
      */
     public function __construct(string $defaultDriver,Array $cacheConfig)
     {
-        CacheManager::setDefaultConfig(new Config([
-            'secureFileManipulation'=>false,
-            'defaultFileNameHashFunction'=>function(){
-                return 'caches';
-            },
-            'htaccess'=>false,
-            'securityKey'=>'',
-        ]));
-
-        $config = new Config(['path'=>$cacheConfig['path']]);
+        $config = new Config(['path'=>$cacheConfig['path'],'secureFileManipulation'=>false,'htaccess'=>false,'securityKey'=>'']);
+        $config->setDefaultFileNameHashFunction(function(){
+            return 'caches';
+        });
+        $config->setDefaultKeyHashFunction(function(){
+            return date('Ymd');
+        });
         if(isset($cacheConfig['predis'])){
             $prefix = $cacheConfig['predis']['prefix'];
             unset($cacheConfig['predis']['prefix']);
+            $cacheConfig['predis']['port'] = intval($cacheConfig['predis']['port']);
+            $cacheConfig['predis']['database'] = intval($cacheConfig['predis']['database']);
             $config = new PredisConfig($cacheConfig['predis']);
             $config->setOptPrefix($prefix);
         }
