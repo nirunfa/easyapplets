@@ -2,8 +2,9 @@
 
 namespace EasyApplets;
 
-use Phpfastcache\Config\Config;
+use Phpfastcache\CacheManager;
 use Phpfastcache\Config\ConfigurationOption;
+use Phpfastcache\Drivers\Files\Config;
 use Phpfastcache\Drivers\Predis\Config as PredisConfig;
 use Phpfastcache\Helper\Psr16Adapter;
 
@@ -16,10 +17,16 @@ class Cache{
      */
     public function __construct(string $defaultDriver,Array $cacheConfig)
     {
-        $cacheConfig['defaultFileNameHashFunction']=function(){
-            return '/easyapplet-caches';
-        };
-        $config = new Config(['path'=>$cacheConfig['path'],'defaultFileNameHashFunction'=>$cacheConfig['defaultFileNameHashFunction']]);
+        CacheManager::setDefaultConfig(new Config([
+            'secureFileManipulation'=>false,
+            'defaultFileNameHashFunction'=>function(){
+                return 'caches';
+            },
+            'htaccess'=>false,
+            'securityKey'=>'',
+        ]));
+
+        $config = new Config(['path'=>$cacheConfig['path']]);
         if(isset($cacheConfig['predis'])){
             $prefix = $cacheConfig['predis']['prefix'];
             unset($cacheConfig['predis']['prefix']);
