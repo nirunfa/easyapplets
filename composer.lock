@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "085e1092d5e2d125e8b5bb11bba10f8a",
+    "content-hash": "3b966869448d7cca576906f37a97ac81",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -488,16 +488,16 @@
             "time": "2021-04-05T22:24:16+00:00"
         },
         {
-            "name": "predis/predis",
+            "name": "predis2/predis2",
             "version": "v1.1.7",
             "source": {
                 "type": "git",
-                "url": "https://github.com/predis/predis.git",
+                "url": "https://gitlab.com/tigefa/predis2.git",
                 "reference": "b240daa106d4e02f0c5b7079b41e31ddf66fddf8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/predis/predis/zipball/b240daa106d4e02f0c5b7079b41e31ddf66fddf8",
+                "url": "https://gitlab.com/api/v4/projects/tigefa%2Fpredis2/repository/archive.zip?sha=b240daa106d4e02f0c5b7079b41e31ddf66fddf8",
                 "reference": "b240daa106d4e02f0c5b7079b41e31ddf66fddf8",
                 "shasum": "",
                 "mirrors": [
@@ -548,8 +548,7 @@
                 "redis"
             ],
             "support": {
-                "issues": "https://github.com/predis/predis/issues",
-                "source": "https://github.com/predis/predis/tree/v1.1.7"
+                "issues": "https://github.com/predis/predis/issues"
             },
             "funding": [
                 {
@@ -557,7 +556,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-04-04T19:34:46+00:00"
+            "time": "2021-04-04T12:34:46+00:00"
         },
         {
             "name": "psr/cache",

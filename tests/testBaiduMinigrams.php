@@ -49,6 +49,7 @@ class testBaiduMinigrams extends TestCase{
             'appid'=>'Z769o94Ot2Yqt15cWcPnfkO91z3e97BT',
             'appkey'=>'ZrQT3jGnS1G7OInG5ZgMNFiDHHvvd2LV',
             // 'cache-path'=>__DIR__.'/logs/',
+            'driver'=>'redis',
             'redis'=>[
                 'host'=>'127.0.0.1',
                 'port'=>6379,

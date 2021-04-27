@@ -3,6 +3,7 @@
 namespace EasyApplets;
 
 use EasyApplets\BaiduPrograms\Oauth as BaiduProgramsOauth;
+use EasyApplets\BaiduPrograms\Userinfo;
 use GuzzleHttp\Client;
 
 /**
@@ -10,25 +11,26 @@ use GuzzleHttp\Client;
  */
 class BaiduApplets implements BaseApplets {
 
-    use BaiduProgramsOauth;
+    use BaiduProgramsOauth,Userinfo;
 
     private $configs = [];
     private $cache = null;
 
     /*
     * 构造函数
+    *
     */
     public function __construct($configs)
     {
         $this->configs=$configs;
-
+        
         $CacheDriver = 'Files';
         $CacheConfigs = [];
-        if(isset($configs['redis'])){
-            $CacheDriver='predis';
-            $redisConfig=$configs['redis'];
+        if(isset($configs['driver'])){
+            $CacheDriver=$configs['driver'] ?? 'Predis';
+            $redisConfig=$configs[$CacheDriver];
             $redisConfig['prefix']='easyapplets:';
-            $CacheConfigs['predis']=$redisConfig;
+            $CacheConfigs[$CacheDriver]=$redisConfig;
         }
         
         $CacheConfigs['path'] = getcwd().'/eacaches/';

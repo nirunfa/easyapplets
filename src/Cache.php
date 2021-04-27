@@ -4,6 +4,7 @@ namespace EasyApplets;
 
 use Phpfastcache\CacheManager;
 use Phpfastcache\Drivers\Files\Config;
+use Phpfastcache\Drivers\Redis\Config as RedisConfig;
 use Phpfastcache\Drivers\Predis\Config as PredisConfig;
 use Phpfastcache\Helper\Psr16Adapter;
 
@@ -26,12 +27,17 @@ class Cache{
         $config->setDefaultKeyHashFunction(function(){
             return date('Ymd');
         });
-        if(isset($cacheConfig['predis'])){
-            $prefix = $cacheConfig['predis']['prefix'];
-            unset($cacheConfig['predis']['prefix']);
-            $cacheConfig['predis']['port'] = intval($cacheConfig['predis']['port']);
-            $cacheConfig['predis']['database'] = intval($cacheConfig['predis']['database']);
-            $config = new PredisConfig($cacheConfig['predis']);
+        if(isset($cacheConfig[$defaultDriver])){
+            $redisConfig = $cacheConfig[$defaultDriver];
+            $prefix = $redisConfig['prefix'];
+            if(isset($redisConfig['prefix']))unset($redisConfig['prefix']);
+            $redisConfig['port'] = intval($redisConfig['port']);
+            $redisConfig['database'] = intval($redisConfig['database']);
+            if(strtolower($defaultDriver)=='redis'){
+                $config = new RedisConfig($redisConfig);
+            }else{
+                $config = new PredisConfig($redisConfig);
+            }
             $config->setOptPrefix($prefix);
         }
         $this->Psr16Adapter = new Psr16Adapter($defaultDriver, $config);

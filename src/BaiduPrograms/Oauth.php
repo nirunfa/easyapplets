@@ -2,9 +2,6 @@
 
 namespace EasyApplets\BaiduPrograms;
 
-use Cache;
-use GuzzleHttp\Client;
-
 trait Oauth {
 
     private $BASE_URI = 'https://openapi.baidu.com';
